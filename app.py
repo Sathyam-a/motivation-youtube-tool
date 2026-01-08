@@ -1,14 +1,20 @@
 import streamlit as st
+import os
 from openai import OpenAI
 
 # ================== OPENAI SETUP ==================
-client = OpenAI(
-    api_key="PASTE_YOUR_OPENAI_API_KEY_HERE"
-)
+# Make sure your API key is saved in Streamlit Secrets as OPENAI_API_KEY
+# OR locally as environment variable
+api_key = st.secrets["OPENAI_API_KEY"] if "OPENAI_API_KEY" in st.secrets else os.getenv("OPENAI_API_KEY")
+
+if not api_key:
+    st.error("❌ OpenAI API Key missing! Add it in Streamlit Secrets or as environment variable OPENAI_API_KEY.")
+    st.stop()
+
+client = OpenAI(api_key=api_key)
 
 # ================== UI ==================
 st.set_page_config(page_title="Motivation YouTube Growth Assistant", layout="centered")
-
 st.title("🔥 Motivation YouTube Growth Assistant")
 st.caption("🚀 Complete AI YouTube Automation Tool")
 
@@ -30,7 +36,6 @@ if st.button("🚀 Generate Full YouTube Growth Kit"):
         st.warning("Please enter a topic")
     else:
         with st.spinner("AI is creating viral content... 🔥"):
-
             prompt = f"""
             You are a professional YouTube growth expert.
 
@@ -51,14 +56,17 @@ if st.button("🚀 Generate Full YouTube Growth Kit"):
             Make it emotional, powerful and viral.
             """
 
-            response = client.responses.create(
-                model="gpt-4.1-mini",
-                input=prompt
-            )
+            try:
+                response = client.responses.create(
+                    model="gpt-4o-mini",  # safe model
+                    input=prompt
+                )
 
-            output = response.output_text
+                output = response.output_text
 
-        st.success("✅ Content Generated Successfully!")
+                st.success("✅ Content Generated Successfully!")
+                st.subheader("📌 Your AI Generated Content")
+                st.text_area("Output", output, height=500)
 
-        st.subheader("📌 Your AI Generated Content")
-        st.text_area("Output", output, height=500)
+            except Exception as e:
+                st.error(f"❌ Error generating content: {e}")
