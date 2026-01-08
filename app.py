@@ -1,11 +1,27 @@
 import streamlit as st
-from openai import OpenAI
-import os
 
-api_key = os.getenv("OPENAI_API_KEY")
+st.set_page_config(
+    page_title="Motivation YouTube Growth Assistant",
+    page_icon="🔥",
+    layout="centered"
+)
 
-if not api_key:
-    st.error("❌ OPENAI_API_KEY environment variable set nahi hai")
-    st.stop()
+st.title("🔥 Motivation YouTube Growth Assistant")
+st.subheader("🚀 Complete AI YouTube Automation Tool")
 
-client = OpenAI(api_key=api_key)
+st.divider()
+
+topic = st.text_input("Enter topic (e.g. success, discipline)")
+
+language = st.selectbox(
+    "Choose Script Language",
+    ["English", "Hindi", "Hinglish"]
+)
+
+content_type = st.selectbox(
+    "Choose Content Type",
+    ["YouTube Short", "Reel", "Long Video"]
+)
+
+if st.button("Generate Full YouTube Growth Kit"):
+    st.success("Working ✅")
