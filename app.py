@@ -1,60 +1,60 @@
 import streamlit as st
-import os
 from openai import OpenAI
 
-# ================== OPENAI SETUP ==================
-# Set your OpenAI API key either as environment variable or in Streamlit Secrets
-api_key = os.getenv("OPENAI_API_KEY")  # local env variable
-if not api_key:
-    st.error("❌ OpenAI API Key missing! Add it as environment variable OPENAI_API_KEY.")
-    st.stop()
+# OpenAI client (API key environment variable se lega)
+client = OpenAI()
 
-client = OpenAI(api_key=api_key)
+st.set_page_config(page_title="YouTube Tool", page_icon="🎥")
+st.title("🎥 YouTube Video Content Generator")
 
-# ================== UI ==================
-st.set_page_config(page_title="Motivation YouTube Growth Assistant", layout="centered")
-st.title("🔥 Motivation YouTube Growth Assistant")
-st.caption("🚀 Complete AI YouTube Automation Tool")
+st.write("Apne YouTube video ke liye Title, Description aur Hashtags generate karo 🚀")
 
-# User input
-topic = st.text_input("Enter Topic (e.g. success, failure, discipline, money, study)")
-language = st.selectbox("Choose Script Language", ["English", "Hindi", "Hinglish"])
-content_type = st.selectbox("Choose Content Type", ["YouTube Long Video", "YouTube Short / Reel"])
+# User inputs
+topic = st.text_input("📌 Video Topic (kis topic par video hai?)")
+language = st.selectbox("🌐 Language", ["Hindi", "English"])
+tone = st.selectbox("🔥 Tone", ["Motivational", "Emotional", "Informative", "Funny"])
 
-# ================== BUTTON ==================
-if st.button("🚀 Generate Full YouTube Growth Kit"):
-    if not topic.strip():
-        st.warning("Please enter a topic")
+if st.button("✨ Generate"):
+    if topic == "":
+        st.warning("Pehle video topic likho")
     else:
-        with st.spinner("AI is creating viral content... 🔥"):
-            prompt = f"""
-            You are a professional YouTube growth expert.
+        prompt = f"""
+        Generate YouTube content for the following video.
 
-            Create COMPLETE YouTube content for:
-            Topic: {topic}
-            Language: {language}
-            Content Type: {content_type}
+        Topic: {topic}
+        Language: {language}
+        Tone: {tone}
 
-            Give output in this format:
+        Give output in this format:
 
-            1. 10 Viral Video Titles
-            2. 10 SEO Hashtags
-            3. Strong 3-line Hook (first 5 seconds)
-            4. Full Emotional Motivational Script
-            5. CTA (Like, Subscribe, Comment)
-            6. 3 Short/Reel Ideas
+        Title:
+        Description:
+        Hashtags:
+        """
 
-            Make it emotional, powerful and viral.
-            """
-            try:
-                response = client.responses.create(
-                    model="gpt-4o-mini",
-                    input=prompt
-                )
-                output = response.output_text
-                st.success("✅ Content Generated Successfully!")
-                st.subheader("📌 Your AI Generated Content")
-                st.text_area("Output", output, height=500)
+        with st.spinner("Generating content..."):
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "user", "content": prompt}
+                ]
+            )
 
-            except Exception as e:
-                st.error(f"❌ Error generating content: {e}")
+        result = response.choices[0].message.content
+
+        st.success("✅ Content Generated")
+
+        st.markdown("### 🏷️ Title")
+        st.write(result.split("Description:")[0].replace("Title:", "").strip())
+
+        st.markdown("### 📝 Description")
+        st.write(
+            result.split("Description:")[1]
+            .split("Hashtags:")[0]
+            .strip()
+        )
+
+        st.markdown("### 🔖 Hashtags")
+        st.write(
+            result.split("Hashtags:")[1].strip()
+        )
