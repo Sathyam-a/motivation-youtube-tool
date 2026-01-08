@@ -1,1 +1,1 @@
-streamlit
+OPENAI_API_KEY = "sk-xxxxxxxxxxxxxxxxxxxxxxxx"
