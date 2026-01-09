@@ -9,21 +9,26 @@ st.set_page_config(
 
 # ================= HEADER =================
 st.title("🔥 Motivation YouTube Growth Assistant")
-st.caption("🚀 Complete YouTube Content Generator (No AI, Fully Stable)")
+st.caption("🚀 YouTube Content Helper (No AI • Fully Stable)")
 
 st.divider()
 
 # ================= INPUTS =================
-topic = st.text_input("Enter Topic (e.g. success, discipline, failure, money)")
+topic = st.text_input("Enter Topic (e.g. success, discipline, money, study)")
 
 language = st.selectbox(
-    "Choose Script Language",
+    "Choose Language",
     ["English", "Hindi", "Hinglish"]
 )
 
 content_type = st.selectbox(
     "Choose Content Type",
     ["YouTube Short / Reel", "Long Video"]
+)
+
+niche = st.selectbox(
+    "Choose Niche",
+    ["Motivation", "Study", "Money", "Gym / Fitness"]
 )
 
 # ================= BUTTON =================
@@ -39,12 +44,11 @@ if st.button("🚀 Generate YouTube Growth Kit"):
         titles = [
             f"The Dark Truth About {topic}",
             f"Why {topic} Is So Hard",
-            f"If You Feel Lost, Listen This About {topic}",
             f"Nobody Talks About {topic}",
+            f"If You Feel Lost, Listen This About {topic}",
             f"How {topic} Can Change Your Life"
         ]
-        for t in titles:
-            st.write("•", t)
+        st.write("\n".join([f"• {t}" for t in titles]))
 
         # ================= HOOK =================
         st.subheader("🎯 Killer Hook (First 3 Seconds)")
@@ -56,54 +60,50 @@ if st.button("🚀 Generate YouTube Growth Kit"):
         if language == "Hindi":
             script = f"""
 Sab {topic} chahte hain,
-lekin struggle koi nahi.
+lekin sacrifice koi nahi karta.
 
-Jab pain aata hai,
-log ruk jaate hain.
-
-Yaad rakhna —
-jo rukta hai, wahi haar ta hai.
+Jo aaj pain se bhaag raha hai,
+kal wahi regret karega.
 """
         elif language == "Hinglish":
             script = f"""
 Sabko {topic} chahiye,
-par sacrifice koi nahi karta.
+par struggle koi nahi chahta.
 
-Pain aaye toh log give up kar dete hain.
-Agar tu abhi bhi khada hai,
-tu already alag hai.
+Agar tu abhi bhi laga hua hai,
+tu already 90% logon se aage hai.
 """
         else:
             script = f"""
 Everyone wants {topic},
-but nobody wants the pain.
+but nobody wants the struggle.
 
-Late nights. Doubt. Silence.
-This phase decides who wins.
+This phase decides
+who quits and who wins.
 """
 
-        st.text_area("Copy Script 👇", script, height=200)
+        st.text_area("Copy Script 👇", script, height=180)
 
         # ================= HASHTAGS =================
         st.subheader("🔖 SEO Hashtags")
-        hashtags = [
-            f"#{topic.replace(' ', '')}",
-            "#motivation",
-            "#success",
-            "#mindset",
-            "#selfimprovement"
-        ]
-        st.write(" ".join(hashtags))
+        hashtags = f"""
+#{topic.replace(" ", "")}
+#{niche.replace(" ", "")}
+#motivation
+#success
+#mindset
+"""
+        st.code(hashtags)
 
         # ================= CTA =================
         st.subheader("📣 Call To Action (CTA)")
-        st.write("Like 👍 | Subscribe 🔔 | Comment 💬")
+        st.write("👍 Like | 🔔 Subscribe | 💬 Comment")
 
         # ================= SHORT IDEAS =================
         st.subheader("🎬 Short / Reel Ideas")
         shorts = [
-            f"1 line truth about {topic}",
-            f"Pain of {topic} (relatable clip)",
+            f"1 powerful line about {topic}",
+            f"Pain of being average in {topic}",
             f"Why most people fail at {topic}"
         ]
         for s in shorts:
