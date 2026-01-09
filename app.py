@@ -1,47 +1,110 @@
 import streamlit as st
 
+# ================= PAGE CONFIG =================
 st.set_page_config(
     page_title="Motivation YouTube Growth Assistant",
     page_icon="🔥",
     layout="centered"
 )
 
+# ================= HEADER =================
 st.title("🔥 Motivation YouTube Growth Assistant")
-st.subheader("🚀 YouTube Content Helper (No AI – Stable Version)")
+st.caption("🚀 Complete YouTube Content Generator (No AI, Fully Stable)")
 
 st.divider()
 
-topic = st.text_input("Enter Topic (e.g. success, discipline, money, study)")
+# ================= INPUTS =================
+topic = st.text_input("Enter Topic (e.g. success, discipline, failure, money)")
 
 language = st.selectbox(
-    "Choose Language",
+    "Choose Script Language",
     ["English", "Hindi", "Hinglish"]
 )
 
 content_type = st.selectbox(
     "Choose Content Type",
-    ["YouTube Short", "Reel", "Long Video"]
+    ["YouTube Short / Reel", "Long Video"]
 )
 
-if st.button("Generate Content"):
+# ================= BUTTON =================
+if st.button("🚀 Generate YouTube Growth Kit"):
+
     if topic.strip() == "":
-        st.warning("Please enter a topic")
+        st.warning("⚠️ Please enter a topic first")
     else:
-        st.success("✅ Content Generated")
+        st.success("✅ Content Generated Successfully!")
 
-        st.markdown("### 📌 Video Title")
-        st.write(f"The Dark Truth About {topic}")
+        # ================= TITLES =================
+        st.subheader("📌 Viral Video Titles")
+        titles = [
+            f"The Dark Truth About {topic}",
+            f"Why {topic} Is So Hard",
+            f"If You Feel Lost, Listen This About {topic}",
+            f"Nobody Talks About {topic}",
+            f"How {topic} Can Change Your Life"
+        ]
+        for t in titles:
+            st.write("•", t)
 
-        st.markdown("### 🔖 Hashtags")
-        st.write(f"#{topic} #motivation #success #mindset #life")
+        # ================= HOOK =================
+        st.subheader("🎯 Killer Hook (First 3 Seconds)")
+        st.write(f"No one warns you about this side of {topic}…")
 
-        st.markdown("### 🎯 Hook (First 3 seconds)")
-        st.write(f"No one talks about this truth of {topic}...")
+        # ================= SCRIPT =================
+        st.subheader("📝 Emotional Script")
 
-        st.markdown("### 📝 Short Script")
         if language == "Hindi":
-            st.write(f"{topic} sab chahte hain, par sacrifice koi nahi karta.")
+            script = f"""
+Sab {topic} chahte hain,
+lekin struggle koi nahi.
+
+Jab pain aata hai,
+log ruk jaate hain.
+
+Yaad rakhna —
+jo rukta hai, wahi haar ta hai.
+"""
         elif language == "Hinglish":
-            st.write(f"Sabko {topic} chahiye, par pain koi nahi chahta.")
+            script = f"""
+Sabko {topic} chahiye,
+par sacrifice koi nahi karta.
+
+Pain aaye toh log give up kar dete hain.
+Agar tu abhi bhi khada hai,
+tu already alag hai.
+"""
         else:
-            st.write(f"Everyone wants {topic}, but no one wants the pain.")
+            script = f"""
+Everyone wants {topic},
+but nobody wants the pain.
+
+Late nights. Doubt. Silence.
+This phase decides who wins.
+"""
+
+        st.text_area("Copy Script 👇", script, height=200)
+
+        # ================= HASHTAGS =================
+        st.subheader("🔖 SEO Hashtags")
+        hashtags = [
+            f"#{topic.replace(' ', '')}",
+            "#motivation",
+            "#success",
+            "#mindset",
+            "#selfimprovement"
+        ]
+        st.write(" ".join(hashtags))
+
+        # ================= CTA =================
+        st.subheader("📣 Call To Action (CTA)")
+        st.write("Like 👍 | Subscribe 🔔 | Comment 💬")
+
+        # ================= SHORT IDEAS =================
+        st.subheader("🎬 Short / Reel Ideas")
+        shorts = [
+            f"1 line truth about {topic}",
+            f"Pain of {topic} (relatable clip)",
+            f"Why most people fail at {topic}"
+        ]
+        for s in shorts:
+            st.write("•", s)
