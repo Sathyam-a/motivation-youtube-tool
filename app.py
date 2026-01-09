@@ -1,54 +1,47 @@
 import streamlit as st
 
-st.set_page_config(page_title="Motivation YouTube Growth Assistant", page_icon="🔥")
+st.set_page_config(
+    page_title="Motivation YouTube Growth Assistant",
+    page_icon="🔥",
+    layout="centered"
+)
 
 st.title("🔥 Motivation YouTube Growth Assistant")
-st.subheader("🎯 Video Idea + Script Generator")
+st.subheader("🚀 YouTube Content Helper (No AI – Stable Version)")
 
-topic = st.text_input("Enter topic (e.g. success, failure, discipline)")
+st.divider()
+
+topic = st.text_input("Enter Topic (e.g. success, discipline, money, study)")
+
+language = st.selectbox(
+    "Choose Language",
+    ["English", "Hindi", "Hinglish"]
+)
 
 content_type = st.selectbox(
-    "Choose content type",
-    ["YouTube Short (30 sec)", "YouTube Reel", "Long Video Intro"]
+    "Choose Content Type",
+    ["YouTube Short", "Reel", "Long Video"]
 )
 
 if st.button("Generate Content"):
-    if topic:
-        st.success("Content Generated Successfully 🚀")
-
-        st.markdown("### ✅ Video Idea")
-        st.write(f"*The dark truth about {topic}*")
-
-        st.markdown("### 📝 Ready-to-Use Script")
-
-        if content_type == "YouTube Short (30 sec)":
-            script = f"""
-Success in {topic} is not easy.
-People see the results,
-but they don’t see the sacrifices.
-If you feel tired,
-remember — this phase is building you.
-Don’t quit. Keep going.
-"""
-        elif content_type == "YouTube Reel":
-            script = f"""
-Everyone wants {topic},
-but no one wants the struggle.
-Pain is temporary.
-Discipline creates freedom.
-Stay focused.
-"""
-        else:
-            script = f"""
-Today we talk about {topic}.
-Not the fake motivation,
-but the real truth.
-If you want growth,
-you must embrace discomfort.
-Let’s begin.
-"""
-
-        st.text_area("Copy Script 👇", script, height=200)
-
+    if topic.strip() == "":
+        st.warning("Please enter a topic")
     else:
-        st.warning("Please enter a topic first!")
+        st.success("✅ Content Generated")
+
+        st.markdown("### 📌 Video Title")
+        st.write(f"The Dark Truth About {topic}")
+
+        st.markdown("### 🔖 Hashtags")
+        st.write(f"#{topic} #motivation #success #mindset #life")
+
+        st.markdown("### 🎯 Hook (First 3 seconds)")
+        st.write(f"No one talks about this truth of {topic}...")
+
+        st.markdown("### 📝 Short Script")
+        if language == "Hindi":
+            st.write(f"{topic} sab chahte hain, par sacrifice koi nahi karta.")
+        elif language == "Hinglish":
+            st.write(f"Sabko {topic} chahiye, par pain koi nahi chahta.")
+        else:
+            st.write(f"Everyone wants {topic}, but no one wants the pain.")
